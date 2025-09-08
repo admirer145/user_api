@@ -34,6 +34,9 @@ class UserCreate(UserBase):
     password: str = Field(..., min_length=6, max_length=12)
    
 
+class UserUpdate(UserBase):
+    pass
+
 
 def calculate_time():
     time_now = datetime.now()
