@@ -29,7 +29,6 @@ class UserBase(BaseModel):
     address: Address
 
 
-
 class UserCreate(UserBase):
     password: str = Field(..., min_length=6, max_length=12)
    

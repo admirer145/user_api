@@ -8,12 +8,12 @@ global_user_dict = {}
 
 
 @router.get("/")
-def get_all_user():
+async def get_all_user():
     return {"users": global_user_dict}
 
 
 @router.get("/{id}", response_model=Union[UserResponse, Dict])
-def get_user_by_id(id: int = Path(..., gt=0)):
+async def get_user_by_id(id: int = Path(..., gt=0)):
     if id not in global_user_dict:
         raise HTTPException(status_code=404, detail="Invalid id provided")
     user_resp = global_user_dict.get(id)
@@ -21,7 +21,7 @@ def get_user_by_id(id: int = Path(..., gt=0)):
 
 
 @router.post("/", status_code=201, response_model=Dict[int, UserResponse])
-def create_user(user: UserCreate):
+async def create_user(user: UserCreate):
     global id_counter
     user_dict = user.model_dump()
     user_dict.update(id=id_counter)
@@ -31,7 +31,7 @@ def create_user(user: UserCreate):
 
 
 @router.put("/{id}")
-def update_user(id: int, user: UserUpdate):
+async def update_user(id: int, user: UserUpdate):
     if id not in global_user_dict:
         raise HTTPException(status_code=404, detail=f"Invalid id provided: {id}")
     
@@ -42,7 +42,7 @@ def update_user(id: int, user: UserUpdate):
 
 
 @router.delete("/{id}")
-def delete_user(id: int):
+async def delete_user(id: int):
     if id not in global_user_dict:
         raise HTTPException(status_code=404, detail=f"Invalid id provided: {id}")
     

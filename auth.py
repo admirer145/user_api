@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Header
 import jwt
-
+import os
 router = APIRouter()
 
-
-SECRET_KEY = '63b642155d5d19da1171e1d5e72b32458d2d1c1247fa154a183e3a0fb0c1c7b2'
-
 user_to_token_dict = {}
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 @router.get("/generate_token/{user_id}")
